@@ -1,5 +1,5 @@
 [package]
-name = "tbp-rs"
+name = "tbp"
 version = "0.1.0"
 authors = ["MinusKelvin <mark.carlson@minuskelvin.net>"]
 edition = "2018"
