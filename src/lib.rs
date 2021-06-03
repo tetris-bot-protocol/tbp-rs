@@ -2,7 +2,7 @@ use enum_map::Enum;
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "randomizer")]
-mod randomizer;
+pub mod randomizer;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
