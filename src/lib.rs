@@ -1,4 +1,8 @@
+use enum_map::Enum;
 use serde::{Deserialize, Serialize};
+
+#[cfg(feature = "randomizer")]
+mod randomizer;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
@@ -11,6 +15,9 @@ pub enum FrontendMessage {
         back_to_back: bool,
         #[serde(with = "BigArray")]
         board: [[Option<char>; 10]; 40],
+        #[cfg(feature = "randomizer")]
+        #[serde(default)]
+        randomizer: randomizer::RandomizerState,
     },
     Stop,
     Suggest,
@@ -21,7 +28,11 @@ pub enum FrontendMessage {
     NewPiece {
         piece: Piece,
     },
-    Rules {},
+    Rules {
+        #[cfg(feature = "randomizer")]
+        #[serde(default)]
+        randomizer: randomizer::RandomizerRule,
+    },
     Quit,
 }
 
@@ -44,7 +55,7 @@ pub enum BotMessage {
     },
 }
 
-#[derive(Serialize, Deserialize, Copy, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, PartialEq, Eq, Hash, Enum)]
 pub enum Piece {
     I,
     O,
@@ -99,6 +110,9 @@ pub enum ErrorCause {
 #[derive(Serialize, Deserialize, Copy, Clone, Debug, PartialEq, Eq, Hash)]
 #[serde(rename_all = "snake_case")]
 pub enum Feature {
+    #[cfg(feature = "randomizer")]
+    Randomizer,
+
     #[serde(other)]
     Unknown,
 }
@@ -107,6 +121,8 @@ impl Feature {
     pub fn enabled() -> Vec<Feature> {
         #[allow(unused_mut)]
         let mut features = vec![];
+        #[cfg(feature = "randomizer")]
+        features.push(Feature::Randomizer);
         features
     }
 }

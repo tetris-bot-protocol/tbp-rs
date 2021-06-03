@@ -10,3 +10,7 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 serde-big-array = "0.3.2"
 serde = { version = "1.0", features = ["derive"] }
+enum-map = { version = "1.1.1", features = ["serde"] }
+
+[features]
+randomizer = []
