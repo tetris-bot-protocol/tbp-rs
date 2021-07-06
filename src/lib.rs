@@ -110,9 +110,6 @@ pub enum ErrorCause {
 #[derive(Serialize, Deserialize, Copy, Clone, Debug, PartialEq, Eq, Hash)]
 #[serde(rename_all = "snake_case")]
 pub enum Feature {
-    #[cfg(feature = "randomizer")]
-    Randomizer,
-
     #[serde(other)]
     Unknown,
 }
@@ -121,8 +118,6 @@ impl Feature {
     pub fn enabled() -> Vec<Feature> {
         #[allow(unused_mut)]
         let mut features = vec![];
-        #[cfg(feature = "randomizer")]
-        features.push(Feature::Randomizer);
         features
     }
 }
