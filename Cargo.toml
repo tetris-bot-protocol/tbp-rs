@@ -14,3 +14,4 @@ enum-map = { version = "1.1.1", features = ["serde"] }
 
 [features]
 randomizer = []
+move_info = []

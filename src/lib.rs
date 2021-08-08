@@ -3,8 +3,10 @@ use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "randomizer")]
 pub mod randomizer;
+#[cfg(feature = "move_info")]
+pub mod move_info;
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum FrontendMessage {
@@ -36,7 +38,7 @@ pub enum FrontendMessage {
     Quit,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 pub enum BotMessage {
@@ -52,6 +54,9 @@ pub enum BotMessage {
     },
     Suggestion {
         moves: Vec<Move>,
+        #[cfg(feature = "move_info")]
+        #[serde(default)]
+        move_info: move_info::MoveInfo,
     },
 }
 
