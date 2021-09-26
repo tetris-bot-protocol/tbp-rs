@@ -1,9 +1,12 @@
 [package]
 name = "tbp"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["MinusKelvin <mark.carlson@minuskelvin.net>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
+description = "Tetris Bot Protocol types crate"
+repository = "https://github.com/tetris-bot-protocol/tbp-rs"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
