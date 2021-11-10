@@ -35,14 +35,14 @@ pub struct Start {
     pub rest: Rest,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
 #[serde(rename_all = "snake_case")]
 pub struct Stop {
     #[serde(flatten)]
     pub rest: Rest,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
 #[serde(rename_all = "snake_case")]
 pub struct Suggest {
     #[serde(flatten)]
@@ -68,7 +68,7 @@ pub struct NewPiece {
     pub rest: Rest,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
 #[serde(rename_all = "snake_case")]
 pub struct Rules {
     #[cfg(feature = "randomizer")]
@@ -79,7 +79,7 @@ pub struct Rules {
     pub rest: Rest,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
 #[serde(rename_all = "snake_case")]
 pub struct Quit {
     #[serde(flatten)]

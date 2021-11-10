@@ -23,7 +23,7 @@ pub struct Error {
     pub rest: Rest,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
 #[serde(rename_all = "snake_case")]
 pub struct Ready {
     #[serde(flatten)]
