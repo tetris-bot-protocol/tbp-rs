@@ -1,5 +1,5 @@
-use serde::{Serialize, Deserialize};
 use enum_map::Enum;
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Copy, Clone, Debug, PartialEq, Eq, Hash, Enum)]
 pub enum Piece {
@@ -51,19 +51,4 @@ pub enum ErrorCause {
 
     #[serde(other)]
     Unknown,
-}
-
-#[derive(Serialize, Deserialize, Copy, Clone, Debug, PartialEq, Eq, Hash)]
-#[serde(rename_all = "snake_case")]
-pub enum Feature {
-    #[serde(other)]
-    Unknown,
-}
-
-impl Feature {
-    pub fn enabled() -> Vec<Feature> {
-        #[allow(unused_mut)]
-        let mut features = vec![];
-        features
-    }
 }

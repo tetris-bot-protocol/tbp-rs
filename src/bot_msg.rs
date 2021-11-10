@@ -1,8 +1,8 @@
 use derive_more::From;
 use serde::{Deserialize, Serialize};
 
-use crate::data::{ErrorCause, Feature, Move};
-use crate::Rest;
+use crate::data::{ErrorCause, Move};
+use crate::{Feature, Rest};
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, From)]
 #[serde(tag = "type")]
