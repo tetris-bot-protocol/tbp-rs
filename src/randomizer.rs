@@ -1,7 +1,7 @@
 use enum_map::EnumMap;
 use serde::{Deserialize, Serialize};
 
-use crate::Piece;
+use crate::data::Piece;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[serde(rename_all = "snake_case")]
