@@ -98,3 +98,15 @@ pub enum MaybeUnknown<K> {
     Known(K),
     Unknown(serde_json::Value)
 }
+
+impl<K: Default> Default for MaybeUnknown<K> {
+    fn default() -> Self {
+        MaybeUnknown::Known(K::default())
+    }
+}
+
+impl<K> From<K> for MaybeUnknown<K> {
+    fn from(v: K) -> MaybeUnknown<K> {
+        MaybeUnknown::Known(v)
+    }
+}

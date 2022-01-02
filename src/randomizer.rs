@@ -1,8 +1,9 @@
+use derive_more::From;
 use serde::{Deserialize, Serialize};
 
 use crate::data::Piece;
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, From)]
 #[serde(rename_all = "snake_case")]
 #[non_exhaustive]
 pub enum RandomizerRule {
@@ -12,24 +13,27 @@ pub enum RandomizerRule {
     Unknown,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, From)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
 #[non_exhaustive]
 pub enum RandomizerState {
     Uniform,
-    SevenBag {
-        bag_state: Vec<Piece>,
-    },
-    GeneralBag {
-        current_bag: Bag,
-        filled_bag: Bag,
-    },
-    #[serde(other)]
+    SevenBag(SevenBag),
+    GeneralBag(GeneralBag),
     Unknown,
 }
 
 gen_type! {
+    pub struct SevenBag {
+        required bag_state: Vec<Piece>,
+    }
+
+    pub struct GeneralBag {
+        required current_bag: Bag,
+        required filled_bag: Bag,
+    }
+
     pub struct Bag {
         #[serde(rename = "I")] i: u32,
         #[serde(rename = "O")] o: u32,
