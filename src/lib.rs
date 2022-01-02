@@ -51,14 +51,25 @@ macro_rules! gen_type {
         $(#[$($a:tt)*])* $f:ident: $t:ty,
         $($rest:tt)*
     ) => {
-        gen_type!(@struct [$($m)*] $state $Name { $($c)* $(#[$($a)*])* pub $f: $t, } $($rest)*);
+        gen_type! {
+            @struct [$($m)*] $state $Name {
+                $($c)* $(#[$($a)*])*
+                #[serde(default)]
+                pub $f: $t,
+            } $($rest)*
+        }
     };
     (
         @struct [$($m:tt)*] $state:ident $Name:ident { $($c:tt)* }
         $(#[$($a:tt)*])* required $f:ident: $t:ty,
         $($rest:tt)*
     ) => {
-        gen_type!(@struct [$($m)*] nodefault $Name { $($c)* $(#[$($a)*])* pub $f: $t, } $($rest)*);
+        gen_type! {
+            @struct [$($m)*] nodefault $Name {
+                $($c)* $(#[$($a)*])*
+                pub $f: $t,
+            } $($rest)*
+        }
     };
 
     (@new {$($req:ident $t:ty)*} {$($def:ident)*}) => {

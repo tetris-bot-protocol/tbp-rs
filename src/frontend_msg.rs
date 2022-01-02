@@ -30,7 +30,6 @@ gen_type! {
         #[serde(with = "crate::BigArray")]
         required board: [[Option<char>; 10]; 40],
     
-        #[serde(default)]
         randomizer: crate::randomizer::RandomizerState,
     }
 

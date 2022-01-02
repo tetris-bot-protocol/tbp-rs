@@ -23,15 +23,14 @@ gen_type! {
         required name: String,
         required version: String,
         required author: String,
-        features: Vec<String>,
+        required features: Vec<String>,
     }
 
     pub struct Ready {}
 
     pub struct Suggestion {
-        moves: Vec<Move>,
+        required moves: Vec<Move>,
 
-        #[serde(default)]
-        required move_info: crate::move_info::MoveInfo,
+        move_info: crate::move_info::MoveInfo,
     }
 }
