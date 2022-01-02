@@ -1,6 +1,7 @@
 use derive_more::From;
 use serde::{Deserialize, Serialize};
 
+use crate::{MaybeUnknown, Feature};
 use crate::data::{ErrorCause, Move};
 
 #[derive(Serialize, Deserialize, Clone, Debug, From)]
@@ -16,14 +17,14 @@ pub enum BotMessage {
 
 gen_type! {
     pub struct Error {
-        required reason: ErrorCause,
+        required reason: MaybeUnknown<ErrorCause>,
     }
 
     pub struct Info {
         required name: String,
         required version: String,
         required author: String,
-        required features: Vec<String>,
+        required features: Vec<MaybeUnknown<Feature>>,
     }
 
     pub struct Ready {}

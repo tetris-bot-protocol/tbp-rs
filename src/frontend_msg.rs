@@ -1,6 +1,7 @@
 use derive_more::From;
 use serde::{Deserialize, Serialize};
 
+use crate::MaybeUnknown;
 use crate::data::{Move, Piece};
 
 #[derive(Serialize, Deserialize, Clone, Debug, From)]
@@ -23,8 +24,8 @@ gen_type! {
     pub struct Quit {}
 
     pub struct Start {
-        required hold: Option<Piece>,
-        required queue: Vec<Piece>,
+        required hold: Option<MaybeUnknown<Piece>>,
+        required queue: Vec<MaybeUnknown<Piece>>,
         required combo: u32,
         required back_to_back: bool,
         #[serde(with = "crate::BigArray")]
@@ -41,7 +42,7 @@ gen_type! {
     }
 
     pub struct NewPiece {
-        required piece: Piece,
+        required piece: MaybeUnknown<Piece>,
     }
 
     pub struct Rules {

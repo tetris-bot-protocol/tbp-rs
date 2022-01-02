@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use crate::MaybeUnknown;
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[non_exhaustive]
 pub enum Piece {
@@ -41,13 +43,13 @@ pub enum ErrorCause {
 gen_type! {
     pub struct Move {
         required location: PieceLocation,
-        required spin: Spin,
+        required spin: MaybeUnknown<Spin>,
     }
 
     pub struct PieceLocation {
         #[serde(rename = "type")]
-        required kind: Piece,
-        required orientation: Orientation,
+        required kind: MaybeUnknown<Piece>,
+        required orientation: MaybeUnknown<Orientation>,
         required x: i32,
         required y: i32,
     }

@@ -104,10 +104,14 @@ type Rest = std::collections::HashMap<String, serde_json::Value>;
 serde_big_array::big_array!(BigArray; 40);
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug)]
+#[non_exhaustive]
+pub enum Feature {}
+
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug)]
 #[serde(untagged)]
 pub enum MaybeUnknown<K> {
     Known(K),
-    Unknown(serde_json::Value)
+    Unknown(serde_json::Value),
 }
 
 impl<K: Default> Default for MaybeUnknown<K> {
