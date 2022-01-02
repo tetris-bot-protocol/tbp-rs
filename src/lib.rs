@@ -77,9 +77,3 @@ pub mod randomizer;
 type Rest = std::collections::HashMap<String, serde_json::Value>;
 
 serde_big_array::big_array!(BigArray; 40);
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug)]
-#[serde(rename_all = "snake_case")]
-pub enum Feature {
-    Unknown(String),
-}

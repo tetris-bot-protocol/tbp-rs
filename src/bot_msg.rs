@@ -2,7 +2,6 @@ use derive_more::From;
 use serde::{Deserialize, Serialize};
 
 use crate::data::{ErrorCause, Move};
-use crate::Feature;
 
 #[derive(Serialize, Deserialize, Clone, Debug, From)]
 #[serde(tag = "type")]
@@ -33,7 +32,7 @@ gen_type! {
         name: String,
         version: String,
         author: String,
-        features: Vec<Feature>,
+        features: Vec<String>,
     }
 
     impl Info {
@@ -41,7 +40,7 @@ gen_type! {
             name: String,
             version: String,
             author: String,
-            features: Vec<Feature>,
+            features: Vec<String>,
         ) -> Self {
             Self {
                 name,
