@@ -1,5 +1,4 @@
 gen_type! {
-    #[derive(Default)]
     pub struct MoveInfo {
         #[serde(default, skip_serializing_if = "Option::is_none")]
         nodes: Option<f64>,

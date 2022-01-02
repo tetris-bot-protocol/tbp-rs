@@ -16,59 +16,22 @@ pub enum BotMessage {
 
 gen_type! {
     pub struct Error {
-        reason: ErrorCause,
-    }
-
-    impl Error {
-        pub fn new(reason: ErrorCause) -> Self {
-            Self {
-                reason,
-                rest: Default::default()
-            }
-        }
+        required reason: ErrorCause,
     }
 
     pub struct Info {
-        name: String,
-        version: String,
-        author: String,
+        required name: String,
+        required version: String,
+        required author: String,
         features: Vec<String>,
     }
 
-    impl Info {
-        pub fn new(
-            name: String,
-            version: String,
-            author: String,
-            features: Vec<String>,
-        ) -> Self {
-            Self {
-                name,
-                version,
-                author,
-                features,
-                rest: Default::default(),
-            }
-        }
-    }
-
-    #[derive(Default)]
     pub struct Ready {}
 
     pub struct Suggestion {
         moves: Vec<Move>,
 
         #[serde(default)]
-        move_info: crate::move_info::MoveInfo,
-    }
-
-    impl Suggestion {
-        pub fn new(moves: Vec<Move>) -> Self {
-            Self {
-                moves,
-                move_info: Default::default(),
-                rest: Default::default(),
-            }
-        }
+        required move_info: crate::move_info::MoveInfo,
     }
 }
