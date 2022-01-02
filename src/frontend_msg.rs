@@ -2,11 +2,11 @@ use derive_more::From;
 use serde::{Deserialize, Serialize};
 
 use crate::data::{Move, Piece};
-use crate::Rest;
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, From)]
+#[derive(Serialize, Deserialize, Clone, Debug, From)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
+#[non_exhaustive]
 pub enum FrontendMessage {
     Start(Start),
     Stop(Stop),
@@ -17,71 +17,77 @@ pub enum FrontendMessage {
     Quit(Quit),
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-#[serde(rename_all = "snake_case")]
-pub struct Start {
-    pub hold: Option<Piece>,
-    pub queue: Vec<Piece>,
-    pub combo: u32,
-    pub back_to_back: bool,
-    #[serde(with = "crate::BigArray")]
-    pub board: [[Option<char>; 10]; 40],
+gen_type! {
+    #[derive(Default)]
+    pub struct Stop {}
 
-    #[cfg(feature = "randomizer")]
-    #[serde(default)]
-    pub randomizer: crate::randomizer::RandomizerState,
+    #[derive(Default)]
+    pub struct Quit {}
 
-    #[serde(flatten)]
-    pub rest: Rest,
-}
+    pub struct Start {
+        hold: Option<Piece>,
+        queue: Vec<Piece>,
+        combo: u32,
+        back_to_back: bool,
+        #[serde(with = "crate::BigArray")]
+        board: [[Option<char>; 10]; 40],
+    
+        #[serde(default)]
+        randomizer: crate::randomizer::RandomizerState,
+    }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
-#[serde(rename_all = "snake_case")]
-pub struct Stop {
-    #[serde(flatten)]
-    pub rest: Rest,
-}
+    impl Start {
+        pub fn new(
+            hold: Option<Piece>,
+            queue: Vec<Piece>,
+            combo: u32,
+            back_to_back: bool,
+            board: [[Option<char>; 10]; 40],
+        ) -> Self {
+            Start {
+                hold,
+                queue,
+                combo,
+                back_to_back,
+                board,
+                randomizer: Default::default(),
+                rest: Default::default(),
+            }
+        }
+    }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
-#[serde(rename_all = "snake_case")]
-pub struct Suggest {
-    #[serde(flatten)]
-    pub rest: Rest,
-}
+    #[derive(Default)]
+    pub struct Suggest {}
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-#[serde(rename_all = "snake_case")]
-pub struct Play {
-    #[serde(rename = "move")]
-    pub mv: Move,
+    pub struct Play {
+        #[serde(rename = "move")]
+        mv: Move,
+    }
 
-    #[serde(flatten)]
-    pub rest: Rest,
-}
+    impl Play {
+        pub fn new(mv: Move) -> Self {
+            Self {
+                mv,
+                rest: Default::default()
+            }
+        }
+    }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-#[serde(rename_all = "snake_case")]
-pub struct NewPiece {
-    pub piece: Piece,
+    pub struct NewPiece {
+        piece: Piece,
+    }
 
-    #[serde(flatten)]
-    pub rest: Rest,
-}
+    impl NewPiece {
+        pub fn new(piece: Piece) -> Self {
+            Self {
+                piece,
+                rest: Default::default()
+            }
+        }
+    }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
-#[serde(rename_all = "snake_case")]
-pub struct Rules {
-    #[cfg(feature = "randomizer")]
-    #[serde(default)]
-    pub randomizer: crate::randomizer::RandomizerRule,
-
-    #[serde(flatten)]
-    pub rest: Rest,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
-#[serde(rename_all = "snake_case")]
-pub struct Quit {
-    #[serde(flatten)]
-    pub rest: Rest,
+    #[derive(Default)]
+    pub struct Rules {
+        randomizer: crate::randomizer::RandomizerRule,
+    }
 }

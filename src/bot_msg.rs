@@ -2,11 +2,12 @@ use derive_more::From;
 use serde::{Deserialize, Serialize};
 
 use crate::data::{ErrorCause, Move};
-use crate::{Feature, Rest};
+use crate::Feature;
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, From)]
+#[derive(Serialize, Deserialize, Clone, Debug, From)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
+#[non_exhaustive]
 pub enum BotMessage {
     Error(Error),
     Ready(Ready),
@@ -14,43 +15,61 @@ pub enum BotMessage {
     Suggestion(Suggestion),
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-#[serde(rename_all = "snake_case")]
-pub struct Error {
-    pub reason: ErrorCause,
+gen_type! {
+    pub struct Error {
+        reason: ErrorCause,
+    }
 
-    #[serde(flatten)]
-    pub rest: Rest,
-}
+    impl Error {
+        pub fn new(reason: ErrorCause) -> Self {
+            Self {
+                reason,
+                rest: Default::default()
+            }
+        }
+    }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
-#[serde(rename_all = "snake_case")]
-pub struct Ready {
-    #[serde(flatten)]
-    pub rest: Rest,
-}
+    pub struct Info {
+        name: String,
+        version: String,
+        author: String,
+        features: Vec<Feature>,
+    }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-#[serde(rename_all = "snake_case")]
-pub struct Info {
-    pub name: String,
-    pub version: String,
-    pub author: String,
-    pub features: Vec<Feature>,
+    impl Info {
+        pub fn new(
+            name: String,
+            version: String,
+            author: String,
+            features: Vec<Feature>,
+        ) -> Self {
+            Self {
+                name,
+                version,
+                author,
+                features,
+                rest: Default::default(),
+            }
+        }
+    }
 
-    #[serde(flatten)]
-    pub rest: Rest,
-}
+    #[derive(Default)]
+    pub struct Ready {}
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-#[serde(rename_all = "snake_case")]
-pub struct Suggestion {
-    pub moves: Vec<Move>,
+    pub struct Suggestion {
+        moves: Vec<Move>,
 
-    #[cfg(feature = "move_info")]
-    #[serde(default)]
-    pub move_info: crate::move_info::MoveInfo,
+        #[serde(default)]
+        move_info: crate::move_info::MoveInfo,
+    }
 
-    #[serde(flatten)]
-    pub rest: Rest,
+    impl Suggestion {
+        pub fn new(moves: Vec<Move>) -> Self {
+            Self {
+                moves,
+                move_info: Default::default(),
+                rest: Default::default(),
+            }
+        }
+    }
 }

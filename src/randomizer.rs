@@ -5,6 +5,7 @@ use crate::data::Piece;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[serde(rename_all = "snake_case")]
+#[non_exhaustive]
 pub enum RandomizerRule {
     Uniform,
     SevenBag,
@@ -16,6 +17,7 @@ pub enum RandomizerRule {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 #[serde(rename_all = "snake_case")]
+#[non_exhaustive]
 pub enum RandomizerState {
     Uniform,
     SevenBag {
