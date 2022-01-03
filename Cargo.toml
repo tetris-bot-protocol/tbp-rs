@@ -1,6 +1,6 @@
 [package]
 name = "tbp"
-version = "2.0.0"
+version = "3.0.0"
 authors = ["MinusKelvin <mark.carlson@minuskelvin.net>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -18,5 +18,3 @@ derive_more = "0.99.16"
 paste = "1.0.6"
 
 [features]
-randomizer = []
-move_info = []
