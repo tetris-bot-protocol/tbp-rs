@@ -28,8 +28,7 @@ gen_type! {
         required queue: Vec<MaybeUnknown<Piece>>,
         required combo: u32,
         required back_to_back: bool,
-        #[serde(with = "crate::BigArray")]
-        required board: [[Option<char>; 10]; 40],
+        required board: Vec<Vec<Option<char>>>,
     
         randomizer: crate::randomizer::RandomizerState,
     }

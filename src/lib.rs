@@ -95,7 +95,6 @@ pub mod frontend_msg;
 
 pub use bot_msg::BotMessage;
 pub use frontend_msg::FrontendMessage;
-use serde::de::Error;
 
 pub mod move_info;
 pub mod randomizer;
