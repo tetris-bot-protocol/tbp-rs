@@ -95,6 +95,7 @@ pub mod frontend_msg;
 
 pub use bot_msg::BotMessage;
 pub use frontend_msg::FrontendMessage;
+use serde::de::Error;
 
 pub mod move_info;
 pub mod randomizer;
@@ -123,5 +124,14 @@ impl<K: Default> Default for MaybeUnknown<K> {
 impl<K> From<K> for MaybeUnknown<K> {
     fn from(v: K) -> MaybeUnknown<K> {
         MaybeUnknown::Known(v)
+    }
+}
+
+impl<K> MaybeUnknown<K> {
+    pub fn known(self) -> Option<K> {
+        match self {
+            MaybeUnknown::Known(v) => Some(v),
+            MaybeUnknown::Unknown(_) => None,
+        }
     }
 }
